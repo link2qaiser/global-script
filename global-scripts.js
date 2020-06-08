@@ -16,20 +16,7 @@ $(document).ready(function () {
   site_url = $("#site_url").html();
   current_url = $("#current_url").html();
 
-  /* IF ATTENDANCE DATE CHANGE THEN PICK EMPLOYEE ACCIRDING TO THAT DATE */
-  $("#attendance_date").change(function () {
-    window.location = site_url + "/attendance/create-view?date=" + this.value;
-  });
-  $(document).on("change", ".Payments", function () {
-    var value = $(this).val();
-    if (value == "2") {
-      $(".bank_module").show();
-      $(".bank_module :input").attr("disabled", false);
-    } else {
-      $(".bank_module").hide();
-      $(".bank_module :input").attr("disabled", true);
-    }
-  });
+ 
   /*
     UPDAT TEXT OF ONE FILED WHEN TEXT OF SECOND FILED UPDATED
     */
@@ -37,41 +24,6 @@ $(document).ready(function () {
     target = $(this).attr("data-change");
     $(target).val($(this).val());
   });
-  /* Full Secreen image viewer */
-  $(document).on("click", ".image-viewer", function (event) {
-    var viewer = ImageViewer();
-    viewer.show($(this).attr("src"));
-  });
-  // Reminder Type change
-  $(document).on("change", ".remind_type", function () {
-    const typeValue = $(this).val();
-    if (typeValue == 1) {
-      $("#remindDays").show();
-      $("#remindDate").hide();
-      $("#remindDate").children(":input").prop("disabled", true);
-      $("#remindDays").children(":input").prop("disabled", false);
-    } else if (typeValue == 2) {
-      $("#remindDays").hide();
-      $("#remindDate").show();
-      $("#remindDate").children(":input").prop("disabled", false);
-      $("#remindDays").children(":input").prop("disabled", true);
-    } else {
-      $("#remindDays").hide();
-      $("#remindDate").hide();
-    }
-  });
-
-  // Role Change
-  $(document).on("change", ".employeeRole", function () {
-    const typeValue = $(this).val();
-    if (typeValue == 101) {
-      $("#receiveAmount,#payAmount").show();
-      $;
-    } else {
-      $("#receiveAmount,#payAmount").hide();
-    }
-  });
-
   /* Change Connection Status */
   $(document).on("change", ".change-status", function (event) {
     status = $(this).val();
@@ -94,24 +46,6 @@ $(document).ready(function () {
     });
   });
 
-  /* Set Featured Image Function */
-  $(document).on("change", ".featured-image", function () {
-    let id = $(this).val();
-    let url = $(this).attr("url");
-    url = site_url + "/" + url + "/" + id;
-    $.ajax({
-      type: "GET",
-      cache: false,
-      url: url,
-      dataType: "json",
-      success: function (data) {
-        console.log(data);
-      },
-      error: function (error) {
-        console.log(error);
-      },
-    });
-  });
 
   /* DELETE FUNTION */
 
@@ -156,29 +90,6 @@ $(document).ready(function () {
       },
     });
   });
-
-  $(document).on("click", ".importgoogle", function (event) {
-    ImportaddWaitWithoutText(this);
-    $.ajax({
-      type: "GET",
-      cache: false,
-      url: $(this).attr("data-url"),
-      dataType: "json",
-      headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
-      success: function (res) {
-        if (res.flag == true) {
-          location.reload();
-        } else {
-          removeWaitWithoutText(
-            ".importgoogle",
-            '<span><i class="fa fa-copy"></i><span>Import Events</span></span>'
-          );
-          toastr["warning"](res.msg, "Oops!");
-        }
-      },
-    });
-  });
-
   /* Backup you can delete it later */
   $(document).on("submit", "form.searchfilter", function (event) {
     var form = $(this).serialize();
@@ -317,22 +228,11 @@ $(document).ready(function () {
     return false;
   });
 
-  $(document).on("change", "#perpage", function (event) {
-    val = $(this).val();
-    window.location.href = current_url + "?perpage=" + val;
-  });
 
   $(document).on("submit", "form.make_ajax_model", function (event) {
     var form = $(this).serialize();
     var btn = "form.make_ajax_model button[type=submit]";
     var btntxt = $(btn).html();
-    /*res = validateForm("form.make_ajax_model");
-        if (res.flag == false) {
-            res.dom.focus().scrollTop();
-            return false;
-        }*/
-
-    //addWait(btn, "working...");
     $.ajax({
       type: $(this).attr("method"),
       cache: false,
@@ -728,69 +628,7 @@ $(".upload-image").change(function () {
   readURL(this);
 });
 
-/*
-CUSTOMER JS
-*/
-$(document).ready(function () {
-  $(document).on("keydown", ".serialFieldCon", function (ev) {
-    var val = $(this).val();
-    dom = $(this);
 
-    if (ev.which === 13) {
-      $(this).attr("disabled", "");
-      $.ajax({
-        type: "GET",
-        cache: false,
-        url: site_url + "/custumers/router/add?serial=" + val,
-        dataType: "json",
-        headers: {
-          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (res) {
-          if (res.list.length == 0) {
-            dom.closest("tr").addClass("error-back");
-            dom.val("");
-            //dom.focus();
-            setTimeout(function () {
-              dom.focus();
-            }, 1000);
-            dom.removeAttr("disabled", "");
-            return false;
-          } else {
-            dom.closest("tr").removeClass("error-back");
-
-            dom.closest("tr").find(".RouterName").val(res.list[0].Label);
-            dom.closest("tr").find(".RouterId").val(res.list[0].sr_id);
-            html =
-              '<tr> <td></td> <td><input type="text" name="Serial[]" value="" class="form-control serialFieldCon" required="" placeholder="Scan Serial or Type" /></td> <td><input type="text" name="RouterName[]" class="form-control" required="" placeholder="Router Name" /><input type="hidden" class="RouterId" name="sr_id[]"></td> <td nowrap=""> <a href="javascript:void(0);" class="btn btn-danger m-btn m-btn--icon m-btn--icon-only delete"> <i class="fa fa-trash"></i> </a></td> </tr>';
-            $("#add_roter_list tbody").append(html);
-            $("#add_roter_list tbody tr:last .serialFieldCon").focus();
-            dom.removeAttr("disabled", "");
-            $("#add_roter_list tbody tr").each(function (index) {
-              $(this)
-                .children("td")
-                .first()
-                .text(index + 1);
-            });
-            return false;
-          }
-        },
-      });
-
-      return false;
-    }
-  });
-  $(document).on("click", "#add_roter_list .delete", function (event) {
-    console.log("test");
-    $(this).closest("tr").remove();
-    $("#add_roter_list tbody tr").each(function (index) {
-      $(this)
-        .children("td")
-        .first()
-        .text(index + 1);
-    });
-  });
-});
 /*
 SELECT2
 */
@@ -800,16 +638,6 @@ $(".select2box").select2({
   enableFiltering: true,
   allowClear: true,
 });
-$(document).on("change", "#material", function () {
-  var value = $(this).val();
-  // alert(value);
-  if (value == 1) {
-    $("#withmaterial").show();
-  } else {
-    $("#withmaterial").hide();
-  }
-});
-
 function initiateSelect2() {
   $(".select2").select2({
     placeholder: " ",
@@ -823,254 +651,6 @@ function initiateSelect2() {
 $(".modal").on("shown.bs.modal", function () {
   initiateSelect2();
 });
-
-/*
-PURCHASE JS
-*/
-$(document).ready(function () {
-  $("#withmaterial").hide();
-  if ($(".serialfield").length == 1) $(".serialfield").focus();
-  $(document).on("keydown", ".serialfield", function (ev) {
-    if (ev.which === 13) {
-      html =
-        '<tr><td></td><td><input type="text" name="Serial[]"  class="form-control serialfield" required=""   /></td><td nowrap=""><a href="javascript:void(0);"  class="btn btn-danger m-btn m-btn--icon m-btn--icon-only delete" title="View"><i class="fa fa-trash"></i></a></td></tr>';
-      $("#roter_list tbody").append(html);
-      $("#roter_list tbody tr:last .serialfield").focus();
-    }
-    $("#roter_list tbody tr").each(function (index) {
-      $(this)
-        .children("td")
-        .first()
-        .text(index + 1);
-    });
-  });
-  $(document).on("click", "#roter_list .delete", function (event) {
-    $(this).closest("tr").remove();
-    $("#roter_list tbody tr").each(function (index) {
-      $(this)
-        .children("td")
-        .first()
-        .text(index + 1);
-    });
-  });
-});
-
-/* CONNECTONS SCRIPT*/
-
-var filterConnection = function () {
-  var parent = "#data_modal";
-  attr = $(".connection_slect2ajax").attr("data-parent");
-  if (typeof attr !== typeof undefined && attr !== false) {
-    parent = attr;
-  }
-  $(".connection_slect2ajax").select2({
-    placeholder: "Select connection",
-    allowClear: true,
-    dropdownParent: jQuery(parent),
-    ajax: {
-      url: site_url + "/customers/connections/filter",
-      dataType: "json",
-      processResults: function (data) {
-        for (i = 0; i < data.length; i++) {
-          data[i]["text"] =
-            data[i]["customer"]["fullname"] + " - " + data[i]["mobile_no"];
-          if (typeof attr !== typeof undefined && attr !== false) {
-            data[i]["id"] = data[i]["username"];
-          } else {
-            data[i]["id"] = data[i]["cc_id"];
-          }
-        }
-        return {
-          results: data,
-        };
-      },
-    },
-    escapeMarkup: function (d) {
-      return d;
-    },
-    templateResult: function (d) {
-      try {
-        fullname = d.customer.fullname;
-      } catch (err) {
-        fullname = "";
-      }
-      try {
-        cnic = d.customer.cnic;
-      } catch (err) {
-        cnic = "";
-      }
-
-      return $(
-        '<table width="100%;"><tbody><tr><td>' +
-          fullname +
-          '</td><td align="right">CNIC: ' +
-          cnic +
-          "</td></tr><tr><td>" +
-          d.address +
-          '</td><td align="right">Username: ' +
-          d.username +
-          "</td></tr><tbody></table>"
-      );
-    },
-
-    processResults: function (d) {
-      cnic = typeof d.cnic == "undefined" ? "" : " (" + d.cnic + ")";
-      return d.text + cnic;
-    },
-    minimumInputLength: 1,
-  });
-};
-
-/* COMPLAIN SCRIPT*/
-
-var filterUser = function () {
-  var parent = "#data_modal";
-  attr = $(".customer_slect2ajax").attr("data-parent");
-  if (typeof attr !== typeof undefined && attr !== false) {
-    parent = attr;
-  }
-  $(".customer_slect2ajax").select2({
-    placeholder: "Select Customer",
-    allowClear: true,
-    dropdownParent: $("#data_modal"),
-    ajax: {
-      url: site_url + "/customers/filter",
-      dataType: "json",
-      processResults: function (data) {
-        for (i = 0; i < data.length; i++) {
-          data[i]["text"] =
-            data[i]["first_name"] +
-            " " +
-            data[i]["last_name"] +
-            " - " +
-            data[i]["mobile_no"];
-          data[i]["id"] = data[i]["cus_id"];
-        }
-        console.log(data);
-        return {
-          results: data,
-        };
-      },
-    },
-    escapeMarkup: function (d) {
-      return d;
-    },
-    templateResult: function (d) {
-      return $(
-        '<table width="100%;"><tbody><tr><td>' +
-          d.first_name +
-          " " +
-          d.last_name +
-          '</td><td align="right">CNIC: ' +
-          d.cnic +
-          "</td></tr><tr><td>" +
-          d.address +
-          '</td><td align="right">Username: ' +
-          d.username +
-          "</td></tr><tbody></table>"
-      );
-    },
-
-    processResults: function (d) {
-      cnic = typeof d.cnic == "undefined" ? "" : " (" + d.cnic + ")";
-      return d.text + cnic;
-    },
-    minimumInputLength: 1,
-  });
-};
-
-/* EMPLOYEE SCRIPT*/
-
-var filterEmployee = function () {
-  var isMultiple = true;
-  attr = $(this).attr("multiple");
-  if (typeof attr !== typeof undefined && attr !== false) {
-    isMultiple = false;
-  }
-  $(".employee_slect2ajax").select2({
-    placeholder: "Assign to Employee",
-    allowClear: true,
-    multiple: isMultiple,
-    dropdownParent: $("#data_modal"),
-    ajax: {
-      url: site_url + "/employees/filter",
-      dataType: "json",
-      processResults: function (data) {
-        for (i = 0; i < data.length; i++) {
-          data[i]["text"] = data[i]["first_name"] + " " + data[i]["last_name"];
-          if (data[i]["phone"] == "undefined")
-            data[i]["text"] += " - " + data[i]["phone"];
-          data[i]["id"] = data[i]["id"];
-        }
-        console.log(data);
-        return {
-          results: data,
-        };
-      },
-    },
-    escapeMarkup: function (d) {
-      return d;
-    },
-    templateResult: function (d) {
-      return $(
-        '<table width="100%;"><tbody><tr><td>' +
-          d.first_name +
-          " " +
-          d.last_name +
-          '</td><td align="right">CNIC: ' +
-          d.phone +
-          "</td></tr><tbody></table>"
-      );
-    },
-
-    processResults: function (d) {},
-    minimumInputLength: 1,
-  });
-};
-
-$(".add_row").on("click", function (e) {
-  row = this.closest("tr").innerHTML;
-  table = $("#make_list > tbody:last");
-
-  table.append("<tr>" + row + "</tr>");
-  $("#make_list tbody tr").each(function (index) {
-    $(this)
-      .children("td")
-      .first()
-      .text(index + 1);
-  });
-  setTimeout(card_row(), 100);
-});
-
-$("#make_list tbody td.delete").on("click", function (e) {
-  // e.preventDefault();
-  console.log("hello");
-  row = this.closest("tr");
-  row.remove();
-});
-function card_row() {
-  $(".add_row").on("click", function (e) {
-    row = this.closest("tr").innerHTML;
-    table = $("#make_list > tbody:last");
-
-    table.append("<tr>" + row + "</tr>");
-    $("#make_list tbody tr").each(function (index) {
-      $(this)
-        .children("td")
-        .first()
-        .text(index + 1);
-    });
-    setTimeout(card_row(), 100);
-  });
-
-  $("#make_list tbody td.delete").on("click", function (e) {
-    // e.preventDefault();
-    console.log("hello");
-    row = this.closest("tr");
-    row.remove();
-  });
-}
-
 /*
     EDIT THE NOTE / DESCRIPTION 
 */
