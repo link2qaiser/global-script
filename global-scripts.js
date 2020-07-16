@@ -15,14 +15,17 @@ var es = false;
 $(document).ready(function () {
   site_url = $("#site_url").html();
   current_url = $("#current_url").html();
-
- 
   /*
-    UPDAT TEXT OF ONE FILED WHEN TEXT OF SECOND FILED UPDATED
-    */
+  UPDAT TEXT OF ONE FILED WHEN TEXT OF SECOND FILED UPDATED
+  */
   $(document).on("keyup", ".keysyn", function (event) {
     target = $(this).attr("data-change");
     $(target).val($(this).val());
+  });
+  /* Full Secreen image viewer */
+  $(document).on("click", ".image-viewer", function (event) {
+    var viewer = ImageViewer();
+    viewer.show($(this).attr("src"));
   });
   /* Change Connection Status */
   $(document).on("change", ".change-status", function (event) {
@@ -45,8 +48,6 @@ $(document).ready(function () {
       },
     });
   });
-
-
   /* DELETE FUNTION */
 
   $(document).on("click", ".list .delete", function (event) {
@@ -89,27 +90,6 @@ $(document).ready(function () {
         }
       },
     });
-  });
-  /* Backup you can delete it later */
-  $(document).on("submit", "form.searchfilter", function (event) {
-    var form = $(this).serialize();
-    var btnText = $(this).find("button[type=submit]").text();
-
-    //addWait("form.searchfilter button[type=submit]", "searching...");
-    $.ajax({
-      type: $(this).attr("method"),
-      cache: false,
-      url: $(this).attr("action") + "?" + form,
-      //dataType: "json",
-      headers: {
-        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-      },
-      success: function (res) {
-        removeWait("form.searchfilter button[type=submit]", btnText);
-        if (res != "") $("#data_list").html(res);
-      },
-    });
-    return false;
   });
   function afterAajaxCall(status, res) {
     if(status == 'success') 
@@ -227,12 +207,11 @@ $(document).ready(function () {
     });
     return false;
   });
-
-
   $(document).on("submit", "form.make_ajax_model", function (event) {
     var form = $(this).serialize();
     var btn = "form.make_ajax_model button[type=submit]";
     var btntxt = $(btn).html();
+    
     $.ajax({
       type: $(this).attr("method"),
       cache: false,
@@ -628,7 +607,6 @@ $(".upload-image").change(function () {
   readURL(this);
 });
 
-
 /*
 SELECT2
 */
@@ -646,11 +624,6 @@ function initiateSelect2() {
     theme: "bootstrap",
   });
 }
-
-// when modal is open
-$(".modal").on("shown.bs.modal", function () {
-  initiateSelect2();
-});
 /*
     EDIT THE NOTE / DESCRIPTION 
 */
