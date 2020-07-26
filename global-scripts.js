@@ -16,6 +16,14 @@ $(document).ready(function () {
   site_url = $("#site_url").html();
   current_url = $("#current_url").html();
   /*
+  NO SPACE
+  */
+  $(document).on("keypress", ".nospace", function (event) {
+    if (event.keyCode == 32) {
+        return false;
+    }
+  });
+  /*
   UPDAT TEXT OF ONE FILED WHEN TEXT OF SECOND FILED UPDATED
   */
   $(document).on("keyup", ".keysyn", function (event) {
@@ -49,7 +57,6 @@ $(document).ready(function () {
     });
   });
   /* DELETE FUNTION */
-
   $(document).on("click", ".list .delete", function (event) {
     var remvove = $(this).attr("data-remove");
     var attr = $(this).attr("data-action");
@@ -73,6 +80,9 @@ $(document).ready(function () {
       },
     });
   });
+  /*
+  DELETE FROM MODAL
+  */
 
   $(document).on("click", ".data-model .delete", function (event) {
     addWaitWithoutText(this);
@@ -91,6 +101,9 @@ $(document).ready(function () {
       },
     });
   });
+  /*
+  AFTER AJAX CALL
+  */
   function afterAajaxCall(status, res) {
     if(status == 'success') 
     {
@@ -131,7 +144,9 @@ $(document).ready(function () {
 
   }
 
-  /* MAKE AJAX CALL */
+  /* 
+  MAKE AJAX CALL 
+  */
   $(document).on("submit", "form.make_ajax", function (event) {
 
     var form = $(this).serialize();
@@ -168,7 +183,9 @@ $(document).ready(function () {
     return false;
   });
 
-  /*Make Ajax call with files */
+  /*
+  Make Ajax call with files
+  */
   $(document).on("submit", "form.make_file_ajax", function (event) {
     event.preventDefault();
     var btn = $(this).find("button[type=submit]");
@@ -249,7 +266,9 @@ $(document).ready(function () {
     return false;
   });
 
-  /* FORM VALIDATION CODE */
+  /* 
+  FORM VALIDATION CODE 
+  */
   $(document).on("submit", "form.validate", function (event) {
     event.preventDefault();
     res = validateForm("form.validate");
@@ -270,7 +289,7 @@ $(document).ready(function () {
   });
   /*
     DATE RANGE PICKER
-    */
+  */
   $(".date_range_picker").each(function () {
     var dateRangeThis = this;
     var future = $(dateRangeThis).attr("data-future") == "false" ? false : true;
@@ -374,6 +393,9 @@ $(document).ready(function () {
   });
 });
 
+/*
+FUNCTION REMOVE PARAMTER FROM QUERY STRING
+*/
 function removeURLParameter(url, parameter) {
   //prefer to use l.search if you have a location/link object
   var urlparts = url.split("?");
@@ -395,7 +417,9 @@ function removeURLParameter(url, parameter) {
     return url;
   }
 }
-
+/*
+FORM VALIDATION (still incomplete)
+*/
 function validateForm(dom) {
   var inputs = $(
     dom +
@@ -624,8 +648,10 @@ function initiateSelect2() {
     theme: "bootstrap",
   });
 }
+
+
 /*
-    EDIT THE NOTE / DESCRIPTION 
+EDIT THE NOTE / DESCRIPTION 
 */
 $(document).on("click", "#edit_note", function (event) {
   var prehtml = $(this).closest("td").find("#des_text").text();
