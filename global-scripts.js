@@ -413,7 +413,7 @@ initDashboardDaterange = function() {
         startDate: $("#daterangeform #start_date").val(),
         endDate: $("#daterangeform #end_date").val(),
         "locale": {
-            "format": "MM/DD/YYYY",
+            "format": "YYYY-MM-DD",
             "separator": " - ",
             "applyLabel": "Apply",
             "cancelLabel": "Cancel",
@@ -452,8 +452,8 @@ initDashboardDaterange = function() {
         if ($('#header-date-range').attr('data-display-range') != '0') {
             $('#header-date-range span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         }
-        $("#daterangeform #start_date").val(start.format('MM/DD/YYYY'));
-        $("#daterangeform #end_date").val(end.format('MM/DD/YYYY'));
+        $("#daterangeform #start_date").val(start.format("YYYY-MM-DD",));
+        $("#daterangeform #end_date").val(end.format("YYYY-MM-DD",));
         
         $("#daterangeform").submit();
     });
