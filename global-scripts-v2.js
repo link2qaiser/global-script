@@ -597,9 +597,7 @@ function loadModal(url, param, param2, param3) {
   if (typeof param2 === "undefined") param2 = null;
   if (typeof param3 === "undefined") param3 = null;
   url =
-    site_url +
-    "/modal/" +
-    url +
+    site_url + url +
     "?param=" +
     param +
     "&param2=" +
