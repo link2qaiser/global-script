@@ -112,10 +112,16 @@ $(document).ready(function () {
     if(status == 'success') 
     {
       if (res.flag == true) {
-        toastr["success"](res.msg, "Completed!");
+        try { 
+          toastr["success"](res.msg, "Completed!");
+        } catch(e) {}
+        
       }
       if (res.flag == false) {
-        toastr["error"](res.msg, "Alert!");
+        try { 
+          toastr["error"](res.msg, "Alert!");
+        } catch(e) {}
+        
       }
       if (res.action == "close") {
         $("#data_modal").modal("hide");
@@ -612,8 +618,14 @@ function loadModal(url, param, param2, param3) {
     //dataType: "json",
     success: function (result) {
       $(".all-modals .modal-content").html(result);
-      FormInputMask.init();
-      ComponentsDateTimePickers.init();
+      try {
+        FormInputMask.init();
+        ComponentsDateTimePickers.init();
+      }
+      catch(e) {
+        console.log("Unable to load Forminput | Timepickers");
+      }
+      
       /*BootstrapDatepicker.init();
             Select2.init();
             FormRepeater.init();*/
@@ -648,21 +660,26 @@ function ImportaddWaitWithoutText(dom) {
   string = '<i class="m-loader">Importing</i>';
   $(dom).html(string);
 }
+try {
+  toastr.options = {
+    closeButton: true,
+    debug: false,
+    positionClass: "toast-top-right",
+    onclick: null,
+    showDuration: "1000",
+    hideDuration: "1000",
+    timeOut: "5000",
+    extendedTimeOut: "1000",
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut",
+  };
+}
+catch(e) {
+    console.log('toastr is not defined');
+}
 
-toastr.options = {
-  closeButton: true,
-  debug: false,
-  positionClass: "toast-top-right",
-  onclick: null,
-  showDuration: "1000",
-  hideDuration: "1000",
-  timeOut: "5000",
-  extendedTimeOut: "1000",
-  showEasing: "swing",
-  hideEasing: "linear",
-  showMethod: "fadeIn",
-  hideMethod: "fadeOut",
-};
 
 function readURL(input) {
   if (input.files && input.files[0]) {
