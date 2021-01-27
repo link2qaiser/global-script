@@ -11,7 +11,79 @@ var paging_url = "";
 var sort_by = "";
 var order_by = "";
 var es = false;
+/*
+AFTER AJAX CALL
+*/
+function afterAajaxCall(status, res) {
+  if(status == 'success') 
+  {
+    if (res.flag == true) {
+      try { 
+        toastr["success"](res.msg, "Completed!");
+      } catch(e) {}
+      
+    }
+    if (res.flag == false) {
+      try { 
+        toastr["error"](res.msg, "Alert!");
+      } catch(e) {}
+      
+    }
+    if (res.action == "close") {
+      $("#data_modal").modal("hide");
+    } else if (res.action == "reload") {
+      window.location.reload();
+    } else if (res.action == "redirect") {
+      window.location.href = res.url;
+    } else {
+      $("." + remvove).remove();
+    }
+  }
+  else 
+  {
+    $.each(err.responseJSON.errors, function (key, value) {
+      var input = "input[name=" + key + "]";
+      $(input).parent().addClass("has-error");
+      var icon = $(input).parent(".input-icon").children("i");
+      icon.removeClass("fa-check").addClass("fa-warning");
+      icon
+        .attr("data-original-title", value)
+        .tooltip({ container: "body" });
+      $(input).closest("div").nextAll("span").remove();
+      $('<span class="text-danger">' + value + "</span>").insertAfter(
+        $(input).closest("div")
+      );
+      $('label[for="' + key + '"]').addClass("text-danger");
+    });
+  }
+}
+function addWait(dom, lable) {
+  $(dom).attr("disabled", "disabled");
+  string = '<i class="fa fa-spinner fa-spin"></i> ' + lable;
+  $(dom).html(string);
+}
 
+function removeWait(dom, lable) {
+  $(dom).removeAttr("disabled");
+  $(dom).html(lable);
+}
+
+function addWaitWithoutText(dom) {
+  $(dom).attr("disabled", "disabled");
+  string = '<i class="m-loader"></i>';
+  $(dom).html(string);
+}
+
+function removeWaitWithoutText(dom, lable) {
+  $(dom).removeAttr("disabled");
+  $(dom).html(lable);
+}
+
+function ImportaddWaitWithoutText(dom) {
+  $(dom).attr("disabled", "disabled");
+  string = '<i class="m-loader">Importing</i>';
+  $(dom).html(string);
+}
 $(document).ready(function () {
   site_url = $("#site_url").html();
   current_url = $("#current_url").html();
@@ -105,53 +177,7 @@ $(document).ready(function () {
       },
     });
   });
-  /*
-  AFTER AJAX CALL
-  */
-  function afterAajaxCall(status, res) {
-    if(status == 'success') 
-    {
-      if (res.flag == true) {
-        try { 
-          toastr["success"](res.msg, "Completed!");
-        } catch(e) {}
-        
-      }
-      if (res.flag == false) {
-        try { 
-          toastr["error"](res.msg, "Alert!");
-        } catch(e) {}
-        
-      }
-      if (res.action == "close") {
-        $("#data_modal").modal("hide");
-      } else if (res.action == "reload") {
-        window.location.reload();
-      } else if (res.action == "redirect") {
-        window.location.href = res.url;
-      } else {
-        $("." + remvove).remove();
-      }
-    }
-    else 
-    {
-      $.each(err.responseJSON.errors, function (key, value) {
-        var input = "input[name=" + key + "]";
-        $(input).parent().addClass("has-error");
-        var icon = $(input).parent(".input-icon").children("i");
-        icon.removeClass("fa-check").addClass("fa-warning");
-        icon
-          .attr("data-original-title", value)
-          .tooltip({ container: "body" });
-        $(input).closest("div").nextAll("span").remove();
-        $('<span class="text-danger">' + value + "</span>").insertAfter(
-          $(input).closest("div")
-        );
-        $('label[for="' + key + '"]').addClass("text-danger");
-      });
-    }
-
-  }
+  
 
   /* 
   Make form submit ajax call
@@ -633,33 +659,7 @@ function loadModal(url, param, param2, param3) {
   });
 }
 
-function addWait(dom, lable) {
-  $(dom).attr("disabled", "disabled");
-  string = '<i class="fa fa-spinner fa-spin"></i> ' + lable;
-  $(dom).html(string);
-}
 
-function removeWait(dom, lable) {
-  $(dom).removeAttr("disabled");
-  $(dom).html(lable);
-}
-
-function addWaitWithoutText(dom) {
-  $(dom).attr("disabled", "disabled");
-  string = '<i class="m-loader"></i>';
-  $(dom).html(string);
-}
-
-function removeWaitWithoutText(dom, lable) {
-  $(dom).removeAttr("disabled");
-  $(dom).html(lable);
-}
-
-function ImportaddWaitWithoutText(dom) {
-  $(dom).attr("disabled", "disabled");
-  string = '<i class="m-loader">Importing</i>';
-  $(dom).html(string);
-}
 try {
   toastr.options = {
     closeButton: true,
@@ -789,4 +789,55 @@ $(document).on("click", "#cancel_note", function (event) {
   selector.closest("td").find("#save_note").hide();
   selector.closest("td").find("#cancel_note").hide();
   selector.closest("td").find("#edit_note").show();
+});
+/*
+Datatable with checkbox and action like wordpress 
+*/
+$(document).ready(function(){
+   $(document).on('change',"#data-table input[type='checkbox']",function(e) {
+      if($(this).closest('th').length == 1) {
+         if($(this).prop("checked") == true){
+            $(this).closest('table').find('tbody').find("input[type='checkbox']").prop("checked", true);
+         }else {
+            $(this).closest('table').find('tbody').find("input[type='checkbox']").prop("checked", false);
+         }
+      }
+  });
+   $(document).on("click", "#data-table #actions button", function (event) {
+      let select = $(this).closest('#actions').find("select").val();
+      if(select == "")
+         return;
+      let action =  $(this).closest('form').attr("action");
+      if(action == "")
+         return;
+      let method = $(this).closest('form').attr("method"); 
+      if(method == "")
+         return;
+      let checkedCount =  $(this).closest('form').find("input[type='checkbox']:checked").length;
+      if(checkedCount == 0) {
+         return;
+      }
+      var form = $(this).closest('form').serialize();
+      var btn = this;
+      var btntxt = $(btn).html();
+      addWait(btn, "working...");
+      $.ajax({
+         type: method,
+         cache: false,
+         data: form,
+         url: action+"/"+select,
+         dataType: "json",
+         headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
+         success: function (res) {
+          removeWait(btn, btntxt);
+          afterAajaxCall('success',res);
+          return false;
+        },
+        error: function (err) {
+          removeWait(btn, btntxt);
+          afterAajaxCall('success',err);
+          return false;
+        },
+      });
+   });
 });
