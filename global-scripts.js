@@ -775,3 +775,25 @@ $(document).on("click", "#cancel_note", function (event) {
   selector.closest("td").find("#cancel_note").hide();
   selector.closest("td").find("#edit_note").show();
 });
+
+/*
+SEO URL method
+*/
+function converToSEO(txt_src){
+
+ var output = txt_src.replace(/[^a-zA-Z0-9]/g,' ').replace(/\s+/g,"-").toLowerCase();
+ /* remove first dash */
+ if(output.charAt(0) == '-') output = output.substring(1);
+ /* remove last dash */
+ var last = output.length-1;
+ if(output.charAt(last) == '-') output = output.substring(0, last);
+ 
+ return output;
+}
+$(document).on("keyup", ".seo-url", function (event) {
+  
+  let val = $(this).val();
+  console.log(val);
+  let target = $(this).attr("data-target");
+  $(target).val(converToSEO(val));
+});
