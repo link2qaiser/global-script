@@ -15,8 +15,7 @@ var es = false;
 AFTER AJAX CALL
 */
 function afterAajaxCall(status, res) {
-  if(status == 'success') 
-  {
+  if(status == 'success')  {
     if (res.flag == true) {
       try { 
         toastr["success"](res.msg, "Completed!");
@@ -39,22 +38,11 @@ function afterAajaxCall(status, res) {
       $("." + remvove).remove();
     }
   }
-  else 
-  {
-    $.each(err.responseJSON.errors, function (key, value) {
-      var input = "input[name=" + key + "]";
-      $(input).parent().addClass("has-error");
-      var icon = $(input).parent(".input-icon").children("i");
-      icon.removeClass("fa-check").addClass("fa-warning");
-      icon
-        .attr("data-original-title", value)
-        .tooltip({ container: "body" });
-      $(input).closest("div").nextAll("span").remove();
-      $('<span class="text-danger">' + value + "</span>").insertAfter(
-        $(input).closest("div")
-      );
-      $('label[for="' + key + '"]').addClass("text-danger");
-    });
+  else if(status == 'error')  {
+  
+    try { 
+        toastr["error"](res.msg, "Alert!");
+      } catch(e) {}
   }
 }
 function addWait(dom, lable) {
@@ -210,8 +198,9 @@ $(document).ready(function () {
         return false;
       },
       error: function (err) {
+        console.log(err.responseJSON);
+        toastr["error"](err.responseJSON.message, "Alert!");
         removeWait(btn, btntxt);
-        afterAajaxCall('success',res);
         return false;
       },
     });
@@ -857,7 +846,7 @@ function converToSEO(txt_src){
 $(document).on("keyup", ".seo-url", function (event) {
   
   let val = $(this).val();
-  console.log(val);
+  
   let target = $(this).attr("data-target");
   $(target).val(converToSEO(val));
 });
