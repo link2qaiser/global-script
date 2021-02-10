@@ -647,8 +647,6 @@ function loadModal(url, param, param2, param3) {
     },
   });
 }
-
-
 try {
   toastr.options = {
     closeButton: true,
@@ -833,7 +831,6 @@ $(document).ready(function(){
 SEO URL method
 */
 function converToSEO(txt_src){
-
  var output = txt_src.replace(/[^a-zA-Z0-9]/g,' ').replace(/\s+/g,"-").toLowerCase();
  /* remove first dash */
  if(output.charAt(0) == '-') output = output.substring(1);
@@ -844,9 +841,7 @@ function converToSEO(txt_src){
  return output;
 }
 $(document).on("keyup", ".seo-url", function (event) {
-  
   let val = $(this).val();
-  
   let target = $(this).attr("data-target");
   $(target).val(converToSEO(val));
 });
