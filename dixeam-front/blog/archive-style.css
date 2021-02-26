@@ -1,190 +1,190 @@
-*{
-	box-sizing: border-box;
-}
-body{
-	margin: 0px;
-	padding: 0px;
-	background: #eef0f1;
-}
-a:hover{
-	text-decoration: none;
-}
-.ua-header{
-	background: #fff;
-	padding: 8px 16px;
-	position: fixed;
-	top: 0px; 
-	left: 0px;
-	width: 100%;
-	z-index: 1;
-	box-shadow: 0 1px 1px #0000001a;
-}
-.ua-container{
-	width: 100%;
-	max-width: 1280px;
-	margin: auto;
-	padding: 0px 16px  
-}
-.ua-logo,.ua-form{
-	display: inline-block;
-	vertical-align: middle;
-}
-.ua-form{
-	width: 100%;
-	max-width: 420px;
-	margin-left: 10px;
-	
-}
-.ua-form input{
-	font-size: 1rem;
-	background-color: #f9fafa;
-	border-color: #b5bdc4;
-	padding: 7px 8px;
-}
-.ua-btn{
-	display: inline-block;
-	font-size: 16px;
-	margin: 0px 8px 0px 0px;
-	padding: 8px 16px;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol';
-	color: #3b49df;
-	font-weight: 500;
-	text-decoration: none;
-	transition: all 200ms ease-in-out;
-	cursor: pointer;
-	border-radius: 5px;
-}
-.ua-btn.ua-btn-bg{
-	color: #fff;
-	background-color: #3b49df;
-}
-.ua-btn:hover{
-	background-color: #f6f6f6;
-	text-decoration: none;
-}
-.ua-btn.ua-card-btn:hover{
-	background: transparent;
-}
-
-/*
-	Side Bar Card
-*/
-
-.ua-card{
-	background-color: #f9fafa;
-	box-shadow: 0 0 0 1px #08090a0d;
-	border-radius: 5px;
-	margin-bottom: 20px;
-}
-.ua-card-img img{
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-}
-.ua-thumb{
-	width: 40px;
-	height: 40px;
-	border-radius: 50%;
-}
-.ua-content .ua-card-body{
-	padding: 12px 16px;
-}
-.ua-card-header {
-	padding: 12px 16px;
-}
-.ua-btn.ua-card-btn{
-	font-size: 14px;
-	margin-right: 0px;
-	padding: 0px;
-}
-.ua-btn.ua-btn-bg:hover{
-	background-color: #323ebe;
-	text-decoration: none;
-}
-.ua-body-element{
-	border: 1px solid #08090a0d;
-	padding: 12px 16px;
-}
-.ua-body-element .ua-card-title {
-	font-size: 16px;
-	color: #202428;
-	font-weight: 400;
-}
-.ua-body-element .ua-btn{
-	color: #64707d;
-	font-size: 14px;
-	padding-top: 4px;
-	font-weight: 400;
-}
-.ua-body-element:hover{
-	background-color: #fff;
-}
-.ua-body-element:hover .ua-card-title{
-	color: #323ebe;
-}
-.ua-card-footer{
-	padding: 12px 16px;
-	text-align: center;
-}
-.ua-card-footer .ua-btn{
-	color: #202428;
-}
-.ua-card-footer .ua-btn:hover{
-	color: #323ebe;
-}
-.ua-post-link{
-	display: block;
-	color: #4d5760;
-	font-size: 14px;
-	font-weight: 500;
-}
-.post-date{
-	font-size: 12px;
-	font-weight: 400;
-}
-
-.indented{
-	padding-left: 40px;
-}
-.ua-post-title a{
-	color: #08090A;
-	font-size: 30px;
-	font-weight: 700;
-}
-.ua-tag-nav{
-	padding: 0px;
-	margin: 0px;
-	list-style: none;
-	display: flex;
-}
-.list-tag{
-	background-color: #BF1942;
-	font-size: 14px;
-	padding: 4px;
-	border-radius: 5px;
-	color: #fff;
-}
-.list-tag a{
-	color: #fff;
-}
-.list-tag + .list-tag{
-	background-color: transparent;
-	margin-left: 10px;
-	color: #64707d!important;
-}
-.list-tag + .list-tag a{
-	color: #64707d!important;
-}
-.indented .ua-btn{
-	color: #64707d;
-}
-.indented .ua-btn-light{
-	padding: 4px 12px;
-	background: #D2D6DB;
-	line-height: 25px;
-}
-.ua-number{
-	font-size: 16px;
-	vertical-align: middle;
+*{
+	box-sizing: border-box;
+}
+body{
+	margin: 0px;
+	padding: 0px;
+	background: #eef0f1;
+}
+a:hover{
+	text-decoration: none;
+}
+.ua-header{
+	background: #fff;
+	padding: 8px 16px;
+	position: fixed;
+	top: 0px; 
+	left: 0px;
+	width: 100%;
+	z-index: 1;
+	box-shadow: 0 1px 1px #0000001a;
+}
+.ua-container{
+	width: 100%;
+	max-width: 1280px;
+	margin: auto;
+	padding: 0px 16px  
+}
+.ua-logo,.ua-form{
+	display: inline-block;
+	vertical-align: middle;
+}
+.ua-form{
+	width: 100%;
+	max-width: 420px;
+	margin-left: 10px;
+	
+}
+.ua-form input{
+	font-size: 1rem;
+	background-color: #f9fafa;
+	border-color: #b5bdc4;
+	padding: 7px 8px;
+}
+.ua-btn{
+	display: inline-block;
+	font-size: 16px;
+	margin: 0px 8px 0px 0px;
+	padding: 8px 16px;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
+	color: #3b49df;
+	font-weight: 500;
+	text-decoration: none;
+	transition: all 200ms ease-in-out;
+	cursor: pointer;
+	border-radius: 5px;
+}
+.ua-btn.ua-btn-bg{
+	color: #fff;
+	background-color: #3b49df;
+}
+.ua-btn:hover{
+	background-color: #f6f6f6;
+	text-decoration: none;
+}
+.ua-btn.ua-card-btn:hover{
+	background: transparent;
+}
+
+/*
+	Side Bar Card
+*/
+
+.ua-card{
+	background-color: #f9fafa;
+	box-shadow: 0 0 0 1px #08090a0d;
+	border-radius: 5px;
+	margin-bottom: 20px;
+}
+.ua-card-img img{
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+.ua-thumb{
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+.ua-content .ua-card-body{
+	padding: 12px 16px;
+}
+.ua-card-header {
+	padding: 12px 16px;
+}
+.ua-btn.ua-card-btn{
+	font-size: 14px;
+	margin-right: 0px;
+	padding: 0px;
+}
+.ua-btn.ua-btn-bg:hover{
+	background-color: #323ebe;
+	text-decoration: none;
+}
+.ua-body-element{
+	border: 1px solid #08090a0d;
+	padding: 12px 16px;
+}
+.ua-body-element .ua-card-title {
+	font-size: 16px;
+	color: #202428;
+	font-weight: 400;
+}
+.ua-body-element .ua-btn{
+	color: #64707d;
+	font-size: 14px;
+	padding-top: 4px;
+	font-weight: 400;
+}
+.ua-body-element:hover{
+	background-color: #fff;
+}
+.ua-body-element:hover .ua-card-title{
+	color: #323ebe;
+}
+.ua-card-footer{
+	padding: 12px 16px;
+	text-align: center;
+}
+.ua-card-footer .ua-btn{
+	color: #202428;
+}
+.ua-card-footer .ua-btn:hover{
+	color: #323ebe;
+}
+.ua-post-link{
+	display: block;
+	color: #4d5760;
+	font-size: 14px;
+	font-weight: 500;
+}
+.post-date{
+	font-size: 12px;
+	font-weight: 400;
+}
+
+.indented{
+	padding-left: 40px;
+}
+.ua-post-title a{
+	color: #08090A;
+	font-size: 30px;
+	font-weight: 700;
+}
+.ua-tag-nav{
+	padding: 0px;
+	margin: 0px;
+	list-style: none;
+	display: flex;
+}
+.list-tag{
+	background-color: #BF1942;
+	font-size: 14px;
+	padding: 4px;
+	border-radius: 5px;
+	color: #fff;
+}
+.list-tag a{
+	color: #fff;
+}
+.list-tag + .list-tag{
+	background-color: transparent;
+	margin-left: 10px;
+	color: #64707d!important;
+}
+.list-tag + .list-tag a{
+	color: #64707d!important;
+}
+.indented .ua-btn{
+	color: #64707d;
+}
+.indented .ua-btn-light{
+	padding: 4px 12px;
+	background: #D2D6DB;
+	line-height: 25px;
+}
+.ua-number{
+	font-size: 16px;
+	vertical-align: middle;
 }
