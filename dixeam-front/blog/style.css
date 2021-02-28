@@ -360,3 +360,6 @@ footer {
     border: 1px solid #ccc;
     border-radius: 6px;
 }
+.error {
+    color:#e83e8c;
+}
