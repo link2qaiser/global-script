@@ -17,7 +17,7 @@ var initSample = ( function() {
      isBBCodeBuiltIn = !!CKEDITOR.plugins.get( 'bbcode' );
 
   return function() {
-     var editorElement = CKEDITOR.document.getById( 'excerpt' );
+     var editorElement = CKEDITOR.document.getById( 'excerpt-editor' );
 
      // :(((
      if ( isBBCodeBuiltIn ) {
@@ -27,10 +27,10 @@ var initSample = ( function() {
      }
      // Depending on the wysiwygarea plugin availability initialize classic or inline editor.
      if ( wysiwygareaAvailable ) {
-        CKEDITOR.replace( 'excerpt' );
+        CKEDITOR.replace( 'excerpt-editor' );
      } else {
         editorElement.setAttribute( 'contenteditable', 'true' );
-        CKEDITOR.inline( 'excerpt' );
+        CKEDITOR.inline( 'excerpt-editor' );
         // TODO we can consider displaying some info box that
         // without wysiwygarea the classic editor may not work.
      }
